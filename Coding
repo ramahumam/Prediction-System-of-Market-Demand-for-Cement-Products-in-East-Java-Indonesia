@@ -1,0 +1,78 @@
+from sklearn.model_selection import train_test_split 
+#Memisah data X (fitur) dan Y (label) secara random menjadi data testing dan data train 
+ing, dimana data testing sebanyak 33% dan data training sebanyak 66% dari data asli 
+x_train, x_true, y_train, y_true=train_test_split(X,Y_1D,test_size=0.3) print(x_train) 
+print(x_true) print(y_train) print(y_true)
+#Import package pandas untuk import data
+import pandas as pd
+#Import package numpy untuk membuat object menjadi n-multidimensi array
+import numpy as np
+#Melakukan import data
+data1 = pd.read_csv ('testh2.csv' )
+#Mengisi Nilai Attribut yang kosong dengan nilai 0
+data=data1.fillna (0)
+#print(data.head())
+#print(data.tail())
+print (data)
+#Membuat array 2D dari data yang telah di import
+ArrayData = np.array(data)
+#print(ArrayData)
+#print(ArrayData.shape)
+#Memilih X sebagai Fitur dari Array yang telah dibuat
+X = ArrayData [:,2:5]
+#Memilih Y sebagai Label dari Array yang telah dibuat
+Y = ArrayData [:,5:6]
+#print(X.shape)
+#print(Y.shape)
+#Mengubah Y menjadi array 1D sehingga bisa dijadikan target pada proses training dan testing
+data
+Y_1D = Y.ravel()
+print (X)
+print(Y)
+#print(Y_1D)
+
+from sklearn.neighbors import KNeighborsRegressor
+#Menggunakan KNN sebagai metode regresi
+neigh = KNeighborsRegressor(n_neighbors=8,metric='minkowski')
+#Mencocokan model data menggunakan x_train sebagai data latih dan y_train sebagai nilai 
+target
+neigh.fit(x_train, y_train) #Memprediksi 
+dari data x_true y_predict = 
+neigh.predict(x_true) print(y_predict)
+
+from sklearn.metrics import r2_score
+print("Koefisien Determinasinya Adalah")
+#Menghitung koefisien determinan dari data testing Y dan data prediksi Y
+print(r2_score(y_true,y_predict))
+from sklearn import neighbors
+from sklearn.metrics import mean_squared_error
+from math import sqrt
+import matplotlib.pyplot as plt
+%matplotlib inline
+
+rmse_val = [] #Membuat Variabel dalam bentuk array untuk menyimpan nilai rmse dari k ya ng 
+berbeda for K in range(350): 
+ K = K+1 
+ #Menggunakan KNN sebagai metode regresi
+ model = neighbors.KNeighborsRegressor(n_neighbors = K) 
+ #Mencocokan model data menggunakan x_train sebagai data latih dan y_train sebagai n 
+ilai target
+ model.fit(x_train, y_train) 
+#Memprediksi dari data x_true 
+pred=model.predict(x_true) #Menghitung 
+nilai RMSE setiap K
+ error = sqrt(mean_squared_error(y_true,pred)) #Menyimpan 
+nilai RMSE ke dalam array untuk setiap K 
+rmse_val.append(error) 
+ print('RMSE value for k= ' , K , 'is:', error)
+
+#Mengubah
+curve = pd.DataFrame(rmse_val)
+#Membuat grafik dari nilai RMSE
+curve.plot()
+from sklearn.model_selection import GridSearchCV
+params = {'n_neighbors':[2,3,4,5,6,7,8,9]}
+knn = neighbors.KNeighborsRegressor()
+model = GridSearchCV(knn, params, cv=5)
+model.fit(x_train,y_train)
+model.best_params_
